@@ -1,0 +1,6 @@
+{
+    "files_to_check": [
+        "ATOM-USD.json"
+    ],
+    "seconds_check": 10
+}

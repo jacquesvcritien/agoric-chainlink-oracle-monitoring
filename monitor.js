@@ -6,27 +6,26 @@ import '@agoric/zoe/exported.js';
 import '@agoric/zoe/src/contracts/exported.js';
 import * as fs from 'fs';
 
-//VARS
-const SECONDS = 60
-const ASSET_IN = "ATOM"
-const ASSET_OUT = "USD"
-const INSTANCE = ASSET_IN+"-"+ASSET_OUT+" priceAggregator"
-
 var results = {}
 
 //Function to monitor oracles' observations
 export default async function monitor(homePromise) {
-    /*const {
+    const {
+        SECONDS,
         ASSET_IN,
         ASSET_OUT,
-        INSTANCE
     } = process.env;
-   */
+
+    const INSTANCE = ASSET_IN+"-"+ASSET_OUT+" priceAggregator"
+
     // Let's wait for the promise to resolve.
     const home = await deeplyFulfilled(homePromise);
     var instance = await E(home.agoricNames).lookup('instance', INSTANCE)
     var pf = await E(home.zoe).getPublicFacet(instance)
     var roundNotifier = await E(pf).getRoundCompleteNotifier()
+
+    //set feed
+    results["feed"] = ASSET_IN+"-"+ASSET_OUT;
     
     while(true){
 
@@ -45,11 +44,10 @@ export default async function monitor(homePromise) {
             results[submitter] = Number(value)
         }
         console.log("Results", results)
+
+        var filename = ASSET_IN+"-"+ASSET_OUT+".json"
     
-        await fs.writeFileSync('results.json', JSON.stringify(results), 'utf8')
+        await fs.writeFileSync(filename, JSON.stringify(results), 'utf8')
         await new Promise(r => setTimeout(r, SECONDS * 1000));
-
     }
-    
-
 }

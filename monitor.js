@@ -47,7 +47,7 @@ export default async function monitor(homePromise) {
         console.log("Results", results)
     
         await fs.writeFileSync('results.json', JSON.stringify(results), 'utf8')
-        await new Promise(r => setTimeout(r, SECONDS * 10000));
+        await new Promise(r => setTimeout(r, SECONDS * 1000));
 
     }
     

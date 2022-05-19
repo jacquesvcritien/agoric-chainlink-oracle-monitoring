@@ -1,0 +1,12 @@
+[Unit]
+Description=Agoric Prometheus Exporter Service
+
+[Service]
+Type=simple
+User=agoric
+Restart=always
+WorkingDirectory=/home/agoric/agoric-chainlink-oracle-monitoring/prometheus-exporter
+ExecStart=/usr/bin/node index.json
+
+[Install]
+WantedBy=multi-user.target

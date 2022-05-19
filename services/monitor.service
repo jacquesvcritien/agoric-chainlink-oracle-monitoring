@@ -1,0 +1,15 @@
+[Unit]
+Description=Agoric Monitor Service
+
+[Service]
+Type=simple
+User=agoric
+Restart=always
+Environment="SECONDS=60"
+Environment="ASSET_IN=ATOM"
+Environment="ASSET_OUT=USD"
+WorkingDirectory=/home/agoric/dapp-oracle/api
+ExecStart=/home/agoric/bin/agoric deploy monitor.js --hostport=127.0.0.1:6891
+
+[Install]
+WantedBy=multi-user.target

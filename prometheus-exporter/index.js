@@ -2,7 +2,7 @@ const client = require('prom-client');
 const fs = require('fs')
 const http = require('http')
 const url = require('url')
-const config = require('config.json')
+const config = require('./config.json')
 
 const observation_value = new client.Gauge({ name: 'observation_value', help: 'Value submitted by oracle', labelNames: ['oracle', 'feed'] });
 const observation_deviation = new client.Gauge({ name: 'observation_deviation', help: 'Deviation between actual and submitted value', labelNames: ['oracle', 'feed'] });
@@ -42,7 +42,7 @@ setInterval(async function(){
             if(key == "actual"){
                 actual_value.set(data[key])
             }
-            else{
+            else if(key != "feed"){
                 observation_value.set({oracle: key, feed: data["feed"]}, data[key])
                 var deviation = Math.abs(((data[key] - data["actual"]) / data["actual"]) * 100)
                 observation_deviation.set({oracle: key, feed: data["feed"]}, deviation)

@@ -6,7 +6,7 @@ const config = require('./config.json')
 
 const observation_value = new client.Gauge({ name: 'observation_value', help: 'Value submitted by oracle', labelNames: ['oracle', 'feed'] });
 const observation_deviation = new client.Gauge({ name: 'observation_deviation', help: 'Deviation between actual and submitted value', labelNames: ['oracle', 'feed'] });
-const actual_value = new client.Gauge({ name: 'actual_value', help: 'Aggregated value' });
+const actual_value = new client.Gauge({ name: 'actual_value', help: 'Aggregated value', labelNames: ['feed'] });
 
 const register = new client.Registry()
 register.registerMetric(observation_value)
@@ -40,7 +40,7 @@ setInterval(async function(){
     
         for(var key in data){
             if(key == "actual"){
-                actual_value.set(data[key])
+                actual_value.set({feed: data["feed"]}, data[key])
             }
             else if(key != "feed"){
                 observation_value.set({oracle: key, feed: data["feed"]}, data[key])

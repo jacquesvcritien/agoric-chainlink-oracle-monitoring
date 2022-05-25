@@ -27,9 +27,12 @@ export default async function monitor(homePromise) {
     //set feed
     results["feed"] = ASSET_IN+"-"+ASSET_OUT;
     
+    var updateCount;
+    
     while(true){
 
-        var result = await E(roundNotifier).getUpdateSince()
+        const result = await E(roundNotifier).getUpdateSince(updateCount)
+        updateCount = result.updateCount;
 
         //get aggregated value
         results["actual"] = (Number(result.value.authenticatedQuote.quoteAmount.value[0].amountOut.value)*1.0) / Number(result.value.authenticatedQuote.quoteAmount.value[0].amountIn.value)
@@ -48,6 +51,6 @@ export default async function monitor(homePromise) {
         var filename = ASSET_IN+"-"+ASSET_OUT+".json"
     
         await fs.writeFileSync(filename, JSON.stringify(results), 'utf8')
-        await new Promise(r => setTimeout(r, SECONDS * 1000));
+//         await new Promise(r => setTimeout(r, SECONDS * 1000));
     }
 }

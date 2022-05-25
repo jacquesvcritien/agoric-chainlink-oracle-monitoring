@@ -1,0 +1,36 @@
+{
+    "sources": {
+        "nomics": "http://172.16.152.145:1012",
+        "coinmetrics": "http://172.16.152.145:1066",
+        "tiingo": "http://172.16.152.145:1048"
+    },
+    "local_price_checks": {
+        "ATOM-USD": [
+            {
+                "source": "nomics",
+                "data": {
+                    "endpoint": "crypto",
+                    "resultPath": "price",
+                    "base": "ATOM",
+                    "quote": "USD"
+                  }
+            },
+            {
+                "source": "coinmetrics",
+                "data": {
+                    "endpoint": "price",
+                    "base": "ATOM",
+                    "quote": "USD"
+                  }
+            },
+            {
+                "source": "tiingo",
+                "data": {
+                    "endpoint": "price",
+                    "base": "ATOM",
+                    "quote": "USD"
+                  }
+            }
+        ]
+    }
+}

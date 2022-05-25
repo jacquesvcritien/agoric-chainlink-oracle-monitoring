@@ -86,11 +86,11 @@ setInterval(async function(){
         for (var index in local_sources_to_check){
             var source = local_sources_to_check[index]
 
-            var data = {
+            var data_to_send = {
                 "id": 1,
                 data: source.data
             }
-            var result = await makePostRequest(sources.sources[source.source], data)
+            var result = await makePostRequest(sources.sources[source.source], data_to_send)
             local_prices.set({source: source.source, feed: feed}, result)
 
         }

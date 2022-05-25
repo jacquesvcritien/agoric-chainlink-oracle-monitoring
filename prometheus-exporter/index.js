@@ -2,6 +2,7 @@ const client = require('prom-client');
 const fs = require('fs')
 const http = require('http')
 const url = require('url')
+const request = require('request')
 const config = require('./config/general.json')
 const sources = require('./config/local-sources.json')
 const oracles = require('./config/oracles.json')
